@@ -9,20 +9,24 @@
 import UIKit
 
 class PageControlCell: UITableViewCell {
+    
     let bigMovieCell = ["LBogan","LCivilwar","LDarkknight","LHaider","LIronman","LLegion","LInception","LFida","LSherlockholmes","LPirates"]
-    let smallMovieCell = ["LCivilwar","PAvengers","PBattleship","LInception","PHobbit","LSherlockholmes","LFida","PSpyder","PThedarknight","PThor"]
+    let smallMovieCell = ["LCivilwar","PAvengers","PBattleship","LInception","PHobbit","LSherlockholmes","LFida"]
     let smallMovieCell2 = ["PAssassin'screed","LDarkknight","LHaider","PDeadpool","PHobbit","PJusticeleague","PMadmax","PSpyder","PThedarknight","PThor"]
+    
     var section : Int?
     var row : Int?
     var pageControl : UIPageControl?
     var offSet: CGFloat = 0
+    var current : CGFloat = 0
+    
     @IBOutlet weak var bigCollectionView: UICollectionView!
+    @IBOutlet weak var pageController: UIPageControl!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setDataSourceDelegate()
-        self.offSet = 0
-        _ = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(AutoScroll(_:)), userInfo: nil, repeats: true)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -59,25 +63,30 @@ extension PageControlCell: UICollectionViewDataSource, UICollectionViewDelegate,
         if section == 0{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bigCollectionCell", for: indexPath) as! BigCollectionCell
             cell.bigImageView.image = UIImage(named: bigMovieCell[indexPath.item])
-            cell.pageControl.currentPage = indexPath.item
-            pageControl?.addTarget(self, action: #selector(self.moveScrollViewToCurrentPage), for: .valueChanged)
-            self.pageControl = cell.pageControl
+            pageController?.addTarget(self, action: #selector(self.moveScrollViewToCurrentPage), for: .valueChanged)
+            self.pageControl = self.pageController
             return cell
         }
             
         else if section == 1{
+        
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bigCollectionCell", for: indexPath) as! BigCollectionCell
             cell.bigImageView.image = UIImage(named: smallMovieCell[indexPath.item])
-            cell.pageControl.isHidden = true
+            self.pageController.isHidden = true
             return cell
         }
             
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bigCollectionCell", for: indexPath) as! BigCollectionCell
             cell.bigImageView.image = UIImage(named: smallMovieCell2[indexPath.item])
-            cell.pageControl.isHidden = true
+            self.pageController.isHidden = true
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        self.pageController.currentPage = indexPath.item
+        self.current = CGFloat(self.pageController.currentPage)
     }
     
     //MARK:--> Flow layout methods
@@ -130,29 +139,52 @@ extension PageControlCell: UICollectionViewDataSource, UICollectionViewDelegate,
     
     //MARK: --> Methods for horizontal scrolling using page control
     @objc private func moveScrollViewToCurrentPage() {
-        
-        let pageNumber = pageControl?.currentPage
+
+        let pageNumber = pageController.currentPage
         var frame = bigCollectionView.frame
-        frame.origin.x = ((frame.size.width) * CGFloat(pageNumber!))
+        frame.origin.x = frame.size.width * CGFloat(pageNumber)
         frame.origin.y = 0
         bigCollectionView.scrollRectToVisible(frame, animated: true)
     }
-    
-    @objc func autoScroll() {
-        if section == 0{
-            let totalPossibleOffset = CGFloat(bigMovieCell.count - 1) * self.bigCollectionView.bounds.size.width
-            if offSet == totalPossibleOffset {
-                offSet = 0           // come back to the first image after the last image
-            }
-            else {
-                offSet += self.bigCollectionView.bounds.size.width
-            }
-            DispatchQueue.main.async() {
-                UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {
-                    self.bigCollectionView.contentOffset.x = CGFloat(self.offSet)
-                }, completion: nil)
+    @objc func AutoScroll(_ timer1: Timer)
+    {  if section == 0{
+        if let collection = bigCollectionView
+        {
+            for cell in collection.visibleCells
+            {
+                let indexPath = collection.indexPath(for: cell)
+                if((indexPath?.row)! < bigMovieCell.count - 1)
+                {
+                    let indexPath1: IndexPath?
+                    indexPath1 = IndexPath.init(row: (indexPath?.row)! + 1, section: (indexPath?.section)!)
+                    collection.scrollToItem(at: indexPath1!, at: .right, animated: true)
+                    
+                }
+                else
+                {
+                    let indexPath1: IndexPath?
+                    indexPath1 = IndexPath.init(row: 0, section: (indexPath?.section)!)
+                    collection.scrollToItem(at: indexPath1!, at: .left, animated: true)
+                    
+                }
             }
         }
     }
+    }
+//    @objc func autoScroll() {
+//        if section == 0{
+//            let totalPossibleOffset = CGFloat(bigMovieCell.count - 1) * self.bigCollectionView.bounds.size.width
+//            if offSet == totalPossibleOffset {
+//                offSet = 0                // come back to the first image after the last image
+//            }
+//            else {
+//                offSet = offSet + (self.bigCollectionView.bounds.size.width)
+//            }
+//            DispatchQueue.main.async() {
+//                UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {
+//                    self.bigCollectionView.contentOffset.x = CGFloat(self.offSet)
+//                }, completion: nil)
+//            }
+//        }
+//    }
 }
-

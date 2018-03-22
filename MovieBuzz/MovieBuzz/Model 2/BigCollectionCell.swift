@@ -9,8 +9,5 @@
 import UIKit
 
 class BigCollectionCell: UICollectionViewCell {
-    
     @IBOutlet weak var bigImageView: UIImageView!
-    @IBOutlet weak var pageControl: UIPageControl!
-    
 }

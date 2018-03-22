@@ -76,41 +76,41 @@
                                                                         <rect key="frame" x="-15" y="0.0" width="405" height="116"/>
                                                                         <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                     </imageView>
-                                                                    <pageControl opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" numberOfPages="10" translatesAutoresizingMaskIntoConstraints="NO" id="yPQ-zV-eEs">
-                                                                        <rect key="frame" x="0.0" y="79" width="375" height="37"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="37" id="HYb-nd-GR5"/>
-                                                                        </constraints>
-                                                                    </pageControl>
                                                                 </subviews>
                                                             </view>
                                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="trailing" secondItem="z3d-cL-Znk" secondAttribute="trailing" constant="-15" id="2Fn-mP-zq0"/>
-                                                                <constraint firstAttribute="bottom" secondItem="yPQ-zV-eEs" secondAttribute="bottom" id="BdK-F7-vny"/>
                                                                 <constraint firstItem="z3d-cL-Znk" firstAttribute="top" secondItem="hv2-JK-z50" secondAttribute="top" id="KKZ-fg-8U9"/>
                                                                 <constraint firstAttribute="bottom" secondItem="z3d-cL-Znk" secondAttribute="bottom" id="P3V-bx-AoY"/>
-                                                                <constraint firstItem="yPQ-zV-eEs" firstAttribute="leading" secondItem="hv2-JK-z50" secondAttribute="leading" id="c3B-fl-hUh"/>
                                                                 <constraint firstItem="z3d-cL-Znk" firstAttribute="leading" secondItem="hv2-JK-z50" secondAttribute="leading" constant="-15" id="ies-5u-IIC"/>
-                                                                <constraint firstAttribute="trailing" secondItem="yPQ-zV-eEs" secondAttribute="trailing" id="lfY-I4-Ojk"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="bigImageView" destination="z3d-cL-Znk" id="KNe-Zo-xbw"/>
-                                                                <outlet property="pageControl" destination="yPQ-zV-eEs" id="oCR-my-SPb"/>
                                                             </connections>
                                                         </collectionViewCell>
                                                     </cells>
                                                 </collectionView>
+                                                <pageControl opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" numberOfPages="10" translatesAutoresizingMaskIntoConstraints="NO" id="yPQ-zV-eEs">
+                                                    <rect key="frame" x="0.0" y="80" width="375" height="37"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="37" id="2QF-aN-JNg"/>
+                                                    </constraints>
+                                                </pageControl>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="yPQ-zV-eEs" firstAttribute="leading" secondItem="2Jg-bQ-pPG" secondAttribute="leading" id="39E-5d-Fij"/>
                                                 <constraint firstItem="pL1-NV-pFW" firstAttribute="leading" secondItem="2Jg-bQ-pPG" secondAttribute="leading" id="6AQ-g5-hpJ"/>
                                                 <constraint firstItem="pL1-NV-pFW" firstAttribute="top" secondItem="2Jg-bQ-pPG" secondAttribute="top" id="6F4-Ka-utq"/>
                                                 <constraint firstAttribute="trailing" secondItem="pL1-NV-pFW" secondAttribute="trailing" id="BFo-r3-BgE"/>
+                                                <constraint firstAttribute="bottom" secondItem="yPQ-zV-eEs" secondAttribute="bottom" id="YqK-GG-A22"/>
+                                                <constraint firstAttribute="trailing" secondItem="yPQ-zV-eEs" secondAttribute="trailing" id="qMe-9S-VxV"/>
                                                 <constraint firstAttribute="bottom" secondItem="pL1-NV-pFW" secondAttribute="bottom" id="zuE-ze-rpr"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="bigCollectionView" destination="pL1-NV-pFW" id="Pme-ww-5Q6"/>
+                                            <outlet property="pageController" destination="yPQ-zV-eEs" id="QtU-hG-niJ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

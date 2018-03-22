@@ -12,14 +12,13 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     let headerText = ["","Watch Next TV and Movies","Latest Movies","Thriller Movies","Action & Recommended Movies"]
-    let bigMovieCell = ["LBogan","LCivilwar","LDarkknight","LHaider","LIronman","LLegion","LInception","LFida","LSherlockholmes","LPirates"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setDataSourceDelegate()
         tableView.backgroundColor = UIColor.black
         
     }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
